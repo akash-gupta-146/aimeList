@@ -19,8 +19,13 @@ export default function Header(){
         dispatch({ type: SEARCH_TEXT , query : searchText})
     }
 
+    function checkKey(e){
+        if(e.keyCode === 13)
+            search();
+    }
+
     return <div className={`flex ${style.header} justify-center`}>
-        <input type="search" className={style.searchBox} value={searchText} onChange={setVal} placeholder="Search anime" />
+        <input type="search" className={style.searchBox} value={searchText} onChange={setVal} onKeyDown={checkKey} placeholder="Search anime" />
         <div className={style.btn} onClick={search}>Go</div>
     </div>
 }
