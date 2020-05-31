@@ -1,6 +1,6 @@
 import React from  'react';
 import { useSelector , useDispatch } from 'react-redux'
-import { loadPage } from '../../store/actions'
+import { LOAD_PAGE } from '../../store/actions'
 
 export default function IncreaseLimit( ){
 
@@ -8,7 +8,7 @@ export default function IncreaseLimit( ){
     const dispatch =  useDispatch()
     
     function increase(){
-        dispatch({type:loadPage})
+        dispatch({type:LOAD_PAGE})
     }
 
     return <button onClick={increase}> Load More </button>
