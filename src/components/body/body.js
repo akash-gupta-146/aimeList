@@ -3,6 +3,8 @@ import * as style from './style.module.scss';
 import { useSelector, useDispatch } from 'react-redux'
 import Card from '../card/card';
 import Loading from '../loading/loading';
+import IncreaseLimit from '../increaseList';
+import  { STOP_LOADING } from './../../store/actions'
 
 // const API_URL = 'https://api.jikan.moe/v3/search/anime?q=%3Cquery%3E&limit=16&page=1'
 
@@ -10,29 +12,31 @@ const BASE_URL = 'https://api.jikan.moe/v3/search/anime?q=<query>'
 
 export default function Body(){
 
-    // const body = useSelector( state => state.body)
     const dispach = useDispatch()
-    const [data,setData] = useState({ animeList: [], isLoading: true})
-    const limit = 16
+    const [data,setData] = useState({ animeList: []})
+    const page = useSelector( state => state.page );
+    const isLoading = useSelector( state => state.isLoading )
+    const limit = 16;
 
     useEffect(()=>{
-        fetch(`${BASE_URL}&limit=${limit}`)
+        fetch(`${BASE_URL}&limit=${limit}&page=${page}`)
         .then ( res => res.json())
-        .then ( data => setData({animeList: data.results, isLoading:0}))
-    },[])
+        .then ( resData => assignFetchedData(resData))
+    },[page,isLoading])
 
-    function increase(){
-        dispach({type: 'INCREASE_AGE' , by: 10})
+    function assignFetchedData(resData){
+        console.log(resData)
+        dispach({ type: STOP_LOADING})
+        console.log(isLoading,'isloading')
+        var anime = [...data.animeList , ...resData.results];
+        setData({animeList: anime})
+
     }
 
     return <div className={`${style.body}`}>
         {
-            data.isLoading &&
-            <Loading />
-        }
-        {
-            !data.isLoading &&
-            <div className={`flex ${style.cards}`}>
+            data.animeList.length > 0 &&
+            <div className={`flex ${style.cards}`}>                
                 {
                     data.animeList.map( ( anime,i ) => {
                         return <React.Fragment key = {anime.mal_id}>
@@ -42,7 +46,7 @@ export default function Body(){
                 }
             </div>
         }
-        {/* Some content here age : { body.age } */}
-        <button onClick={increase}>increase</button>
+        { isLoading === false && <Loading /> }
+        <IncreaseLimit />
     </div>
 }

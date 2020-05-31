@@ -1,15 +1,18 @@
+import { loadPage, STOP_LOADING } from './actions'
+
 const initialState = {
-    body : {
-        age : 0
-    }
+    page : 1,
+    isLoading: 1
 }
 
 export default function reducer (state = initialState, action){
     
     switch ( action.type ) {
-        case 'INCREASE_AGE':
-            console.log('akash')
-                 return { body : {age : state.body.age+action.by} }
+        case loadPage:
+                 return { page : state.page+1, isLoading : 1 }
+        case STOP_LOADING:
+                console.log('stop loading')
+                return Object.assign({},state,{isLoading : 0})
         default: return state
     }
 }
