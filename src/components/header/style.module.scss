@@ -5,6 +5,10 @@
     width: 100%;
     z-index: 1;;
     background: #349dfb;
+    ::placeholder{
+        color:white;
+        font-weight: bold;
+    }
     .btn{
         position: absolute;
         right: 0;

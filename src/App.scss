@@ -13,3 +13,9 @@
 .justify-center{
   justify-content: center;;
 }
+.btn{
+  transition: 0.3s;;
+  &:hover{
+    background:#CDDC39;
+  }
+}

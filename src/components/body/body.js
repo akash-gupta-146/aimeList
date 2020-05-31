@@ -34,6 +34,7 @@ export default function Body(){
 
     function assignFetchedData(resData){
         var anime = [];
+        
         if(!filter)
             anime = [...data.animeList , ...resData.results];
         if(filter)
